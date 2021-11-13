@@ -24,7 +24,21 @@ function buildQuiz() {
 
 // this functions runs on click
 function showResults() {
+    const answerContainers = quizContainer.querySelectorAll('.answers');
+    let numCorrect = 0;
+    myQuestions.forEach( (currentQuestion, questionNumber) => {
+        const answerContainer = answerContainers[questionNumber];
+        const selected = `input[name=question${questionNumber}]:checked`;
+        const userAnswer = (answerContainer.querySelector(selected) || {}).value;
 
+        if(userAnswer === currentQuestion.correctAnswer){
+            numCorrect++; // adds 1 to score
+            answerContainers[questionNumber].style.color = 'green'; // adds styling to answers
+        } else{
+            answerContainers[questionNumber].style.color = 'red';
+        }
+    });
+    resultsContainer.innerHTML = `Score: ${numCorrect}`
 }
 
 const quizContainer = $('#quiz');
